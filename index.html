@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Monster Hunter</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/vue"></script>
+  </head>
+  <body>
+    <div id="game" class="container">
+      <div class="panel">
+        <div class="player">
+          <h1>Jogador</h1>
+          <img height="200px" width="200px" src="https://i.pinimg.com/originals/98/76/72/98767253e3024089df5c191c56988390.png" alt="jogador" class="img-circle">
+          <div class="life-bar">
+              <div class="life" :style="{ width: `${vidaJogador}%`, backgroundColor: barraCor(vidaJogador) }"></div>
+          </div>
+          <p>{{ vidaJogador }}%</p>
+        </div>
+        <div class="player">
+          <h1>Monstro</h1>
+          <img height="200px" width="200px" src="https://storage.qoo-app.com/game/10855/YtL5K6CyPrC3nnDYGJwaIVOv7rxZ0Wlp.png" alt="monstro" class="img-circle">
+          <div class="life-bar">
+            <div class="life" :style="{ width: `${vidaMonstro}%`, backgroundColor: barraCor(vidaMonstro) }"></div>
+          </div>
+          <p>{{ vidaMonstro }}%</p>
+        </div>
+      </div>
+      <div class="panel" v-if="mensagemFinal != null">
+        <span :style="{ color: mensagemFinal.cor }">{{ mensagemFinal.texto }}</span>
+      </div>
+      <div class="panel">
+        <template v-if="!iniciado">
+          <button class="button" style="background-color: blue;" @click="iniciarJogo()">Iniciar Novo Jogo</button>
+        </template>
+        <template v-else>
+          <button class="button" style="background-color: red;" @click="atacar()">Ataque</button>
+          <button class="button" style="background-color: orange;" @click="atacarMagia()">Magia</button>
+          <button class="button" style="background-color: green;" @click="curar()">Curar</button>
+          <button class="button" style="background-color: grey;" @click="desistirJogo()">Desistir</button>
+        </template>
+      </div>
+      <div class="panel" v-show="logs.length > 0">
+        <ul>
+          <li style="list-style-type: none;" v-for="(item, index) in logs" :key="index">
+            <div class="log" :style="{ backgroundColor: item.cor }"><span>{{ item.mensagem }}</span></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
